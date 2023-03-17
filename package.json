@@ -1,0 +1,10 @@
+{
+  "name": "minifier-app",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "escodegen": "^2.0.0",
+    "esprima": "^4.0.1",
+    "terser": "^5.10.0"
+  }
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Minifier</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css">
+</head>
+<body>
+  <div class="container">
+    <h1>JavaScript Minifier</h1>
+
+    <h3>Input:</h3>
+    <div id="input"></div>
+
+    <div class="buttons-container">
+      <button id="start" class="action-btn">Start</button>
+      <button id="stop" class="action-btn">Stop</button>
+      <button id="refresh" class="action-btn">Refresh</button>
+    </div>
+    <div id="timer-display" class="timer-display"></div>
+
+    <div class="buttons-container">
+        <button id="copy" class="action-btn">Copy to Clipboard</button>
+        <button id="clear" class="action-btn">Clear</button>
+        <button id="load-sample" class="action-btn">Load Sample Code</button>
+      </div>
+  
+      <h3>Output:</h3>
+      <div id="output"></div>
+  
+      <h3>Import File:</h3>
+      <div id="drag-drop-area" class="drag-drop-area">
+        <p>Drag and drop your .js file here</p>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/javascript/javascript.min.js"></script>
+    <script type="module" src="codeMirror.js"></script>
+    <script type="module" src="app.js"></script>
+    
+  </body>
+  </html>
+  
