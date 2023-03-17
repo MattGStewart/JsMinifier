@@ -2,7 +2,10 @@
 import * as escodegen from 'https://cdn.skypack.dev/escodegen@2.0.0';
 import * as esprima from 'https://cdn.skypack.dev/esprima@4.0.1';
 import * as Terser from 'https://cdn.skypack.dev/terser@5.10.0';
-import { init as initCodeMirror } from './codeMirror.js';
+import { init } from './codeMirror.js';
+
+init();
+
 initCodeMirror();
 
 
@@ -163,3 +166,16 @@ class MinifierApp {
           }
         
           const app = new MinifierApp();
+
+          const downloadButton = document.getElementById("download");
+
+        downloadButton.addEventListener("click", () => {
+        const outputText = outputEditor.getValue();
+        const blob = new Blob([outputText], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "minified-output.txt";
+        a.click();
+        URL.revokeObjectURL(url);
+        });

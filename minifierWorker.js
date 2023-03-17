@@ -1,16 +1,19 @@
 importScripts('https://cdn.skypack.dev/escodegen');
 importScripts('https://cdn.skypack.dev/esprima');
 importScripts('https://cdn.skypack.dev/terser');
+importScripts('https://cdn.skypack.dev/eslint');
 
 self.addEventListener('message', async (event) => {
   const inputCode = event.data;
-  
+
+  const lintedAndFixedCode = await lintAndFix(inputCode);
+
   try {
-    esprima.parse(inputCode, { tokens: true, comment: true });
+    esprima.parse(lintedAndFixedCode, { tokens: true, comment: true });
   } catch (error) {
     try {
       const fixedCode = escodegen.generate(
-        esprima.parseScript(inputCode, {
+        esprima.parseScript(lintedAndFixedCode, {
           tolerant: true,
           tokens: true,
           comment: true,
@@ -25,7 +28,7 @@ self.addEventListener('message', async (event) => {
   }
 
   try {
-    const minified = await Terser.minify(inputCode, {
+    const minified = await Terser.minify(lintedAndFixedCode, {
       compress: {
         sequences: true,
         dead_code: true,
@@ -51,3 +54,17 @@ self.addEventListener('message', async (event) => {
     self.postMessage({ error: 'Error: Unable to minify due to syntax errors' });
   }
 });
+
+async function lintAndFix(code) {
+  const { Linter } = eslint;
+  const linter = new Linter();
+
+  const defaultConfig = {
+    env: { es2022: true },
+    parserOptions: { ecmaVersion: 2022 },
+    rules: { /* Add any custom rules here */ },
+  };
+
+  const messages = linter.verifyAndFix(code, defaultConfig);
+  return messages.fixed ? messages.output : code;
+}
